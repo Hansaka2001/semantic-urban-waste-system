@@ -1,0 +1,20 @@
+html,
+body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+  height: 8px;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

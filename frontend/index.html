@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart Waste AI — Ontology Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="min-h-screen bg-gray-100 font-sans text-gray-800">
+    <div class="flex">
+      <aside
+        class="w-64 bg-gray-900 text-white min-h-screen flex flex-col fixed"
+      >
+        <div class="px-6 py-8">
+          <div class="flex items-center gap-3">
+            <div class="text-2xl text-green-400">
+              <i class="fa-solid fa-recycle"></i>
+            </div>
+            <div>
+              <div class="text-lg font-semibold">Smart Waste AI</div>
+              <div class="text-xs text-gray-400">Ontology Explorer</div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="px-4">
+          <ul class="space-y-2">
+            <li>
+              <button
+                id="tab-classes"
+                class="w-full text-left px-4 py-2 rounded-md bg-gray-800 hover:bg-gray-700"
+              >
+                Overview &amp; Classes
+              </button>
+            </li>
+            <li>
+              <button
+                id="tab-properties"
+                class="w-full text-left px-4 py-2 rounded-md hover:bg-gray-800"
+              >
+                Properties
+              </button>
+            </li>
+            <li>
+              <button
+                id="tab-individuals"
+                class="w-full text-left px-4 py-2 rounded-md hover:bg-gray-800"
+              >
+                Individuals / Data
+              </button>
+            </li>
+            <li>
+              <button
+                id="tab-cqs"
+                class="w-full text-left px-4 py-2 rounded-md hover:bg-gray-800"
+              >
+                Competency Questions
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="flex-1 p-8 bg-gray-50 min-h-screen ml-64">
+        <section id="sec-classes">
+          <header class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">
+              Overview &amp; Classes
+            </h1>
+          </header>
+          <div
+            id="classesHierarchy"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6"
+          ></div>
+        </section>
+
+        <section id="sec-properties" class="hidden">
+          <header class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Properties</h1>
+          </header>
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <table id="propertiesTable" class="min-w-full text-sm">
+              <thead class="bg-gray-50 border-b">
+                <tr>
+                  <th class="p-4 text-left font-medium text-gray-600">
+                    Property Name
+                  </th>
+                  <th class="p-4 text-left font-medium text-gray-600">Type</th>
+                  <th class="p-4 text-left font-medium text-gray-600">
+                    Domain
+                  </th>
+                  <th class="p-4 text-left font-medium text-gray-600">Range</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="sec-individuals" class="hidden">
+          <header class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Individuals / Data</h1>
+          </header>
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <table id="individualsTable" class="min-w-full text-sm">
+              <thead class="bg-gray-50 border-b">
+                <tr>
+                  <th class="p-4 text-left font-medium text-gray-600">
+                    Instance Name
+                  </th>
+                  <th class="p-4 text-left font-medium text-gray-600">
+                    Belongs to Class
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="sec-cqs" class="hidden">
+          <header class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">System Queries</h1>
+          </header>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <h3 class="font-bold text-gray-800 mb-4">Competency Questions</h3>
+              <select
+                id="querySelect"
+                class="w-full rounded-lg border px-3 py-2 mb-4"
+              >
+                <option value="cq1">CQ1: What is the status of Bin_001?</option>
+                <option value="cq2">
+                  CQ2: Where is Truck_A delivering and routing?
+                </option>
+                <option value="cq3">
+                  CQ3: What is the capacity of the truck on Route_1A?
+                </option>
+              </select>
+              <button
+                id="searchBtn"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-semibold transition-colors"
+              >
+                Run Competency Query
+              </button>
+            </div>
+
+            <div
+              class="bg-white rounded-xl shadow-sm p-6 border-t-4 border-teal-500"
+            >
+              <h3 class="font-bold text-gray-800 mb-4">Operational Queries</h3>
+              <select
+                id="operationalSelect"
+                class="w-full rounded-lg border px-3 py-2 mb-4"
+              >
+                <option value="op1">
+                  Alert: Which bins are over 75% full?
+                </option>
+                <option value="op2">
+                  Logistics: Which trucks have capacity >= 5000?
+                </option>
+              </select>
+              <button
+                id="runOpBtn"
+                class="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg font-semibold transition-colors"
+              >
+                Run Operational Query
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">
+              Query Results
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-sm">
+                <thead class="bg-gray-50 border-b">
+                  <tr id="tableHeaders"></tr>
+                </thead>
+                <tbody id="resultsBody" class="divide-y divide-gray-100">
+                  <tr>
+                    <td class="p-4 text-gray-500 italic">
+                      Select a query above and click run.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
